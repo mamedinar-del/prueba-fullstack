@@ -29,24 +29,19 @@ const Productos = () => {
         if(e.target.value === "") setSearchParams({});
     };
 
-    // 💡 FUNCIÓN CORREGIDA: Usa BASE_URL para los assets y el fallback.
     const getImageUrl = (imgName) => {
-        const base = import.meta.env.BASE_URL; // Obtiene /FullStack-II/
-        const fallback = `${base}assets/img/ps5-caja.png`; // Genera /FullStack-II/assets/img/ps5-caja.png
+        const base = import.meta.env.BASE_URL;
+        const fallback = `${base}assets/img/ps5-caja.png`;
         
         if (!imgName) return fallback;
         if (imgName.startsWith("http")) return imgName;
         
-        // Si el path es local (/assets/...), le aplica la BASE_URL
         if (imgName.startsWith("/assets")) {
-            // Asegura que no haya doble barra (//)
             return `${base.replace(/\/$/, '')}${imgName}`;
         }
         
-        // Ruta del Backend (la causa más probable del error 404 para la imagen propia)
         return `http://localhost:8080/api/productos/images/${imgName}`;
     };
-    // ---------------------------------------------------------------------------------
 
     const productosProcesados = productos
         .filter((prod) => {
@@ -133,7 +128,6 @@ const Productos = () => {
                                                 <img 
                                                     src={getImageUrl(prod.img)} 
                                                     alt={prod.nombre} 
-                                                    // Ahora el onError usa la función para obtener el fallback correcto
                                                     onError={(e) => e.target.src = getImageUrl(null)} 
                                                 />
                                             </Link>

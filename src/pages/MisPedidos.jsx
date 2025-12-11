@@ -8,21 +8,17 @@ const MisPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 💡 FUNCIÓN CORREGIDA: Incluye BASE_URL para manejar el despliegue en subdirectorios.
     const getImageUrl = (imgName) => {
-        // Obtiene el prefijo de ruta de Vite (ej: /FullStack-II/)
         const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`; // El fallback ahora usa la ruta base correcta.
+        const fallback = `${base}assets/img/ps5-caja.png`;
         
         if (!imgName) return fallback;
         if (imgName.startsWith("http")) return imgName;
         
-        // Si el path es un asset local, le aplica la BASE_URL
         if (imgName.startsWith("/assets")) {
              return `${base.replace(/\/$/, '')}${imgName}`;
         }
         
-        // Ruta del Backend (aquí es donde falla el 404 para las imágenes propias)
         return `http://localhost:8080/api/productos/images/${imgName}`;
     };
 
@@ -94,7 +90,6 @@ const MisPedidos = () => {
                                                     src={getImageUrl(detalle.producto.img)} 
                                                     alt={detalle.producto.nombre} 
                                                     style={{width: '80px', height: '80px', objectFit: 'contain', borderRadius: '8px', border:'1px solid #f0f0f0'}}
-                                                    // Usar la función getImageUrl(null) para el fallback
                                                     onError={(e) => e.target.src = getImageUrl(null)}
                                                 />
                                             </Link>

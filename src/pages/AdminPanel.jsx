@@ -30,20 +30,17 @@ const AdminPanel = () => {
     });
     const [specsList, setSpecsList] = useState([{ key: '', value: '' }]);
 
-    // 💡 Versión robusta de la función de URL, usando BASE_URL para el fallback
     const getImgUrl = (path) => {
         const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`; // Fallback usa BASE_URL
+        const fallback = `${base}assets/img/ps5-caja.png`;
         
         if (!path) return fallback;
         if (path.startsWith("http")) return path;
         
-        // Si la ruta es un asset local (para el logo o el fallback)
         if (path.startsWith("/assets")) {
              return `${base.replace(/\/$/, '')}${path}`;
         }
         
-        // Ruta del Backend (causa más probable de error 404)
         return `http://localhost:8080/api/productos/images/${path}`;
     };
 
@@ -162,7 +159,6 @@ const AdminPanel = () => {
         <div className="admin-layout">
             <aside className="admin-sidebar">
                 <div className="sidebar-header">
-                    {/* El logo usa la función getImgUrl, que maneja la BASE_URL de Vite */}
                     <img src={getImgUrl("/assets/img/LogoTienda-SinFondo.png")} alt="Admin" className="sidebar-logo" />
                 </div>
                 <nav className="sidebar-nav">
@@ -296,7 +292,6 @@ const AdminPanel = () => {
                                             <img 
                                                 src={getImgUrl(p.img)} 
                                                 style={{width:40, height:40, objectFit:'cover', borderRadius:'4px'}} 
-                                                // El onError también usa la función getImgUrl con null para obtener la ruta de fallback con BASE_URL
                                                 onError={e => e.target.src = getImgUrl(null)} 
                                                 alt={p.nombre}
                                             />
@@ -360,7 +355,6 @@ const AdminPanel = () => {
                         <div style={{maxHeight:'300px', overflowY:'auto'}}>
                             {ventaSeleccionada.detalles?.map(d => (
                                 <div key={d.id} className="detalle-item">
-                                    {/* Aquí también usamos la función getImgUrl con la misma lógica */}
                                     <img src={getImgUrl(d.producto.img)} alt={d.producto.nombre} onError={e => e.target.src=getImgUrl(null)} />
                                     <div style={{flex:1}}>
                                         <h5 style={{margin:0}}>{d.producto.nombre}</h5>

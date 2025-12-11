@@ -1,28 +1,20 @@
 import { useCart } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 
-// No necesitamos importar la imagen directamente si usamos la ruta dinámica con BASE_URL, 
-// pero mantendremos la importación si la quieres usar como un recurso importado para el fallback.
-// import ps5CajaFallback from '/assets/img/ps5-caja.png'; 
-
 const CartMenu = () => {
     const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, cartTotal } = useCart();
 
-    // 💡 FUNCIÓN AÑADIDA: Lógica robusta para manejar rutas de imágenes del backend y assets locales
     const getImageUrl = (imgName) => {
-        // Obtiene el prefijo de ruta de Vite (ej: /FullStack-II/)
         const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`; // El fallback ahora usa la ruta base correcta.
+        const fallback = `${base}assets/img/ps5-caja.png`;
         
         if (!imgName) return fallback;
         if (imgName.startsWith("http")) return imgName;
         
-        // Si el path es un asset local (útil si guardas el path completo), le aplica la BASE_URL
         if (imgName.startsWith("/assets")) {
              return `${base.replace(/\/$/, '')}${imgName}`;
         }
         
-        // Ruta del Backend (Para la imagen real del producto)
         return `http://localhost:8080/api/productos/images/${imgName}`;
     };
 
@@ -53,10 +45,8 @@ const CartMenu = () => {
                             <div className="cart-item" key={item.id}>
                                 <div className="cart-item-img">
                                     <img 
-                                        // 💡 Usamos la función getImageUrl para construir la URL correcta
                                         src={getImageUrl(item.img)} 
                                         alt={item.nombre} 
-                                        // Usar getImageUrl(null) asegura que el fallback usa BASE_URL
                                         onError={(e) => e.target.src = getImageUrl(null)}
                                     />
                                 </div>
