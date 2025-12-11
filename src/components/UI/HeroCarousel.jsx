@@ -8,15 +8,15 @@ const HeroCarousel = () => {
     const slides = [
         {
             id: 1,
-            image: `${BASE_URL}assets/img/slide1 (1920 x 600 mm).svg`, 
+            image: `${BASE_URL}assets/img/slide1.jpg`, 
         },
         {
             id: 2,
-            image: `${BASE_URL}assets/img/slide2 (1920 x 600 mm).svg`,
+            image: `${BASE_URL}assets/img/slide2.jpg`,
         },
         {
             id: 3,
-            image: `${BASE_URL}assets/img/slide3 (1920 x 600 mm).svg`,
+            image: `${BASE_URL}assets/img/slide3.jpg`,
         }
     ];
 

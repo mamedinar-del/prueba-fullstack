@@ -43,7 +43,7 @@ function App() {
   return (
     <AuthProvider>
         <CartProvider>
-            <BrowserRouter>
+            <BrowserRouter basename='/prueba-fullstack'>
                 <ScrollArriba />
                 <Layout>
                     <Routes>
