@@ -12,21 +12,17 @@ const DetalleProducto = () => {
     
     const { addToCart } = useCart();
 
-    // 💡 FUNCIÓN CORREGIDA: Incluye BASE_URL para manejar el despliegue en subdirectorios.
     const getImageUrl = (imgName) => {
-        // Obtiene el prefijo de ruta de Vite (ej: /FullStack-II/)
         const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`; // El fallback ahora usa la ruta base correcta.
+        const fallback = `${base}assets/img/ps5-caja.png`;
         
         if (!imgName) return fallback;
         if (imgName.startsWith("http")) return imgName;
         
-        // Si el path es un asset local, le aplica la BASE_URL
         if (imgName.startsWith("/assets")) {
              return `${base.replace(/\/$/, '')}${imgName}`;
         }
-        
-        // Ruta del Backend (aquí es donde probablemente falla el 404)
+
         return `http://localhost:8080/api/productos/images/${imgName}`;
     };
 
@@ -39,9 +35,7 @@ const DetalleProducto = () => {
                     const encontrado = todos.find(p => p.id === parseInt(id));
                     if (encontrado) {
                         setProducto(encontrado);
-                        // 1. Log para debugging:
                         console.log("Nombre de archivo esperado:", encontrado.img);
-                        // 2. Intentamos cargar la imagen:
                         setImagenActiva(encontrado.img); 
                     }
                 }
@@ -80,7 +74,6 @@ const DetalleProducto = () => {
                         <img 
                             src={getImageUrl(imagenActiva)} 
                             alt={producto.nombre} 
-                            // 💡 Se usa la función para asegurar que el fallback use BASE_URL
                             onError={(e) => e.target.src = getImageUrl(null)}
                         />
                     </div>
@@ -96,7 +89,6 @@ const DetalleProducto = () => {
                     )}
                 </div>
 
-                {/* ... (El resto del código JSX se mantiene igual) ... */}
 
                 <div className="info-container">
                     <p className="marca-sku">COD: {producto.id} | Categoría: {producto.categoria}</p>

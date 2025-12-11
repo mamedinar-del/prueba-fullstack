@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
-// 1. Importación directa de la imagen del Logo
 import logoImage from '/assets/img/LogoTienda-SinFondo.png'; 
 
 const Header = () => {
@@ -31,7 +30,6 @@ const Header = () => {
         <header className="header-principal">
             <div className="logo-container">
                 <Link to="/">
-                    {/* Uso de la variable importada */}
                     <img src={logoImage} alt="Logo Level-Up" className="mi-logo" /> 
                 </Link>
             </div>

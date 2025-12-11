@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-    // 💡 Paso 1: Obtener la BASE_URL de Vite (esto será "/FullStack-II/")
     const BASE_URL = import.meta.env.BASE_URL;
 
-    // 💡 Paso 2: Construir la ruta completa para el logo
     const logoSrc = `${BASE_URL}assets/img/LogoTienda-SinFondo.png`;
 
     return (
@@ -15,7 +13,6 @@ const Footer = () => {
                     
                     <div className="brand-footer">
                         <img 
-                            // 💡 Aplicamos la ruta corregida
                             src={logoSrc} 
                             alt="Logo" 
                             className="logo-medio" 
