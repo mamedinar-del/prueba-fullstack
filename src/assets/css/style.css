@@ -687,7 +687,7 @@ h1, h2, h3, h4, h5, h6, button, input, textarea {
 /* --- Estilos Página Sobre Nosotros ---------------------------------------------------------------------------------------- */
 
 .page-header {
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/img/banner.svg');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/assets/img/banner.svg');
     background-size: cover;
     background-position: center;
     height: 250px;
@@ -814,7 +814,7 @@ h1, h2, h3, h4, h5, h6, button, input, textarea {
 /* --- Estilos para la Página de Servicio Técnico ---------------------------------------------------------------------------------------- */
 
 .page-header-tecnico {
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/img/banner.svg');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/assets/img/banner.svg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -1437,7 +1437,7 @@ h1, h2, h3, h4, h5, h6, button, input, textarea {
 /* --- ESTILOS PÁGINA BLOG ---------------------------------------------------------------------------- */
 
 .page-header-blog {
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/img/banner.svg');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/assets/img/banner.svg');
     background-size: cover;
     background-position: center;
     padding: 80px 20px;
@@ -1634,7 +1634,7 @@ html {
 /* --- ESTILOS PÁGINA DE ENVÍOS ----------------------------------------------------------------------------------------------- */
 
 .page-header-envios {
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/img/banner.svg');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/assets/img/banner.svg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -3235,4 +3235,37 @@ html {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.ql-container, 
+.ql-editor {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    color: #333 !important;
+}
+
+.ql-editor.ql-blank::before {
+    font-family: 'Roboto', sans-serif !important;
+    font-style: normal !important;
+    color: #777 !important;
+    opacity: 1 !important;
+    left: 15px !important;
+}
+
+.ql-toolbar.ql-snow {
+    border-color: #ddd !important;
+    border-radius: 5px 5px 0 0;
+    background-color: #f8f9fa;
+}
+
+.ql-container.ql-snow {
+    border-color: #ddd !important;
+    border-radius: 0 0 5px 5px;
+    background-color: #fafafa;
+}
+
+.ql-container.ql-snow:focus-within {
+    border-color: #38a1ee !important;
+    background-color: white !important;
 }
