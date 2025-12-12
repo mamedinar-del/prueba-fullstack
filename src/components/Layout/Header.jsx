@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
-import logoImage from '/assets/img/LogoTienda-SinFondo.png'; 
+import logoImage from '../../assets/img/LogoTienda-SinFondo.png'; 
 
 const Header = () => {
     const { user, logout } = useAuth();

@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
 
+import banner1 from '../../assets/img/banner-slide1.jpg'; 
+
 const HeroCarousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    const BASE_URL = import.meta.env.BASE_URL;
 
     const slides = [
         {
             id: 1,
-            image: `${BASE_URL}assets/img/slide1.jpg`, 
+            image: banner1, 
         },
         {
             id: 2,
-            image: `${BASE_URL}assets/img/slide2.jpg`,
+            image: banner1,
         },
         {
             id: 3,
-            image: `${BASE_URL}assets/img/slide3.jpg`,
+            image: banner1,
         }
     ];
-
+    
     const nextSlide = () => {
         setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     };
@@ -47,7 +47,6 @@ const HeroCarousel = () => {
                             src={slide.image} 
                             alt={`Slide ${slide.id}`}
                         />
-
                     </div>
                 ))}
             </div>

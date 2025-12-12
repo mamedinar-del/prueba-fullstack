@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
-    const BASE_URL = import.meta.env.BASE_URL;
+import logoImg from '../../assets/img/LogoTienda-SinFondo.png';
 
-    const logoSrc = `${BASE_URL}assets/img/LogoTienda-SinFondo.png`;
+const Footer = () => {
 
     return (
         <footer className="footer-principal" id="contacto">
@@ -13,7 +12,7 @@ const Footer = () => {
                     
                     <div className="brand-footer">
                         <img 
-                            src={logoSrc} 
+                            src={logoImg} 
                             alt="Logo" 
                             className="logo-medio" 
                         />

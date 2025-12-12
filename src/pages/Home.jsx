@@ -4,8 +4,8 @@ import HeroCarousel from '../components/UI/HeroCarousel';
 import { getProductos } from '../services/dataService';
 import { useCart } from '../context/CartContext';
 
-import fallbackImage from '/assets/img/ps5-caja.png';
-import tecnicoImage from '/assets/img/tecnico.jpg';
+import fallbackImage from '../assets/img/ps5-caja.png';
+import tecnicoImage from '../assets/img/tecnico.jpg';
 
 const Home = () => {
     const [productos, setProductos] = useState([]);

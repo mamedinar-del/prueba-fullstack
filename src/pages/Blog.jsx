@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import picMain from '/assets/img/pic-main.jpg'; 
-import pic1 from '/assets/img/pic1.jpg';
-import pic2 from '/assets/img/pic2.jpg';
-import pic3 from '/assets/img/pic3.jpg';
-import pic4 from '/assets/img/pic4.jpg';
-import pic5 from '/assets/img/pic5.jpg';
-import pic6 from '/assets/img/pic6.jpg';
+import picMain from '../assets/img/pic-main.jpg'; 
+import pic1 from '../assets/img/pic1.jpg';
+import pic2 from '../assets/img/pic2.jpg';
+import pic3 from '../assets/img/pic3.jpg';
+import pic4 from '../assets/img/pic4.jpg';
+import pic5 from '../assets/img/pic5.jpg';
+import pic6 from '../assets/img/pic6.jpg';
 
 const Blog = () => {
 
