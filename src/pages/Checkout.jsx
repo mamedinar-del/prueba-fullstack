@@ -4,6 +4,25 @@ import { useCart } from '../context/CartContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { crearPedidoAPI } from '../services/dataService';
 
+const REGIONES_Y_COMUNAS = [
+    {
+        nombre: "Arica y Parinacota",
+        comunas: ["Arica", "Camarones", "Putre", "General Lagos"]
+    },
+    {
+        nombre: "Metropolitana de Santiago",
+        comunas: ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Santiago", "Vitacura", "Puente Alto", "San Bernardo", "Pirque", "Buin", "Paine", "Colina", "Lampa", "Tiltil", "Melipilla", "San Pedro", "Curacaví", "María Pinto", "Isla de Maipo", "Talagante", "El Monte", "Peñaflor", "Padre Hurtado"]
+    },
+    {
+        nombre: "Valparaíso",
+        comunas: ["Valparaíso", "Viña del Mar", "Concón", "Quilpué", "Villa Alemana", "Limache", "Quillota", "San Antonio", "Isla de Pascua"]
+    },
+    {
+        nombre: "Biobío",
+        comunas: ["Concepción", "Talcahuano", "San Pedro de la Paz", "Coronel", "Lota", "Chiguayante", "Hualpén", "Los Ángeles"]
+    }
+];
+
 const Checkout = () => {
     const { user, updateUser } = useAuth();
     const { cart, cartTotal, cartSubtotal, discount, couponName, applyCoupon, clearCart } = useCart();
@@ -11,7 +30,24 @@ const Checkout = () => {
     
     const [inputCupon, setInputCupon] = useState("");
     const [msgCupon, setMsgCupon] = useState("");
-    const [direccionForm, setDireccionForm] = useState({ region: '', comuna: '', calle: '', numero: '', depto: '' });
+    const [comunasDisponibles, setComunasDisponibles] = useState([]); 
+
+    const [direccionForm, setDireccionForm] = useState({ 
+        region: user?.region || '', 
+        comuna: user?.comuna || '', 
+        calle: user?.calle || '', 
+        numero: user?.numero || '', 
+        depto: user?.depto || '' 
+    });
+
+    useEffect(() => {
+        if (direccionForm.region) {
+            const regionSeleccionada = REGIONES_Y_COMUNAS.find(r => r.nombre === direccionForm.region);
+            if (regionSeleccionada) {
+                setComunasDisponibles(regionSeleccionada.comunas);
+            }
+        }
+    }, [user]);
 
     const tieneDireccion = user?.calle && user?.numero && user?.comuna;
 
@@ -29,6 +65,25 @@ const Checkout = () => {
     const handleSaveAddress = (e) => {
         e.preventDefault();
         updateUser(direccionForm);
+    };
+    const handleRegionChange = (e) => {
+        const nuevaRegion = e.target.value;
+        setDireccionForm({
+            ...direccionForm, 
+            region: nuevaRegion, 
+            comuna: ''
+        });
+
+        if (nuevaRegion) {
+            const regionSeleccionada = REGIONES_Y_COMUNAS.find(r => r.nombre === nuevaRegion);
+            if (regionSeleccionada) {
+                setComunasDisponibles(regionSeleccionada.comunas);
+            } else {
+                setComunasDisponibles([]);
+            }
+        } else {
+            setComunasDisponibles([]);
+        }
     };
 
     const handlePayment = async () => {
@@ -51,12 +106,51 @@ const Checkout = () => {
                     <p style={{marginBottom:'20px', color:'#666'}}>Necesitamos tus datos de envío.</p>
                     
                     <form onSubmit={handleSaveAddress} className="login-form">
-                        <div className="input-wrapper"><label>Región</label><div className="input-icon-box"><input onChange={e=>setDireccionForm({...direccionForm, region:e.target.value})} required /></div></div>
-                        <div className="input-wrapper"><label>Comuna</label><div className="input-icon-box"><input onChange={e=>setDireccionForm({...direccionForm, comuna:e.target.value})} required /></div></div>
-                        <div className="form-row">
-                            <div className="input-wrapper"><label>Calle</label><div className="input-icon-box"><input onChange={e=>setDireccionForm({...direccionForm, calle:e.target.value})} required /></div></div>
-                            <div className="input-wrapper"><label>Número</label><div className="input-icon-box"><input onChange={e=>setDireccionForm({...direccionForm, numero:e.target.value})} required /></div></div>
+                        <div className="input-wrapper">
+                            <label>Región</label>
+                            <div className="input-icon-box">
+                                <select 
+                                    onChange={handleRegionChange}
+                                    required
+                                    value={direccionForm.region}
+                                >
+                                    <option value="">Selecciona una Región</option>
+                                    {REGIONES_Y_COMUNAS.map((region, index) => (
+                                        <option key={index} value={region.nombre}>
+                                            {region.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
+                        <div className="input-wrapper">
+                            <label>Comuna</label>
+                            <div className="input-icon-box">
+                                <select 
+                                    onChange={e=>setDireccionForm({...direccionForm, comuna:e.target.value})} 
+                                    required
+                                    value={direccionForm.comuna}
+                                    disabled={!direccionForm.region || comunasDisponibles.length === 0}
+                                >
+                                    <option value="">
+                                        {direccionForm.region ? "Selecciona una Comuna" : "Selecciona primero una Región"}
+                                    </option>
+                                    {comunasDisponibles.map((comuna, index) => (
+                                        <option key={index} value={comuna}>
+                                            {comuna}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        
+                        <div className="form-row">
+                            <div className="input-wrapper"><label>Calle</label><div className="input-icon-box"><input value={direccionForm.calle} onChange={e=>setDireccionForm({...direccionForm, calle:e.target.value})} required /></div></div>
+                            <div className="input-wrapper"><label>Número</label><div className="input-icon-box"><input value={direccionForm.numero} type="number" onChange={e=>setDireccionForm({...direccionForm, numero:e.target.value})} required /></div></div>
+                        </div>
+                        <div className="input-wrapper"><label>Depto/Casa (opcional)</label><div className="input-icon-box"><input value={direccionForm.depto} onChange={e=>setDireccionForm({...direccionForm, depto:e.target.value})} /></div></div>
+
                         <button className="btn-login">Guardar y Continuar</button>
                     </form>
                 </div>
