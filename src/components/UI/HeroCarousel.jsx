@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getImagenUrl } from '../../services/dataService';
 
 const HeroCarousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate();
 
     const slides = [
         {
@@ -34,6 +36,10 @@ const HeroCarousel = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const handleBannerClick = () => {
+        navigate('/productos');
+    };
+
     return (
         <section className="hero-carousel">
             <div 
@@ -41,7 +47,12 @@ const HeroCarousel = () => {
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
                 {slides.map((slide) => (
-                    <div className="carousel-slide" key={slide.id}>
+                    <div 
+                        className="carousel-slide" 
+                        key={slide.id}
+                        onClick={handleBannerClick}
+                        style={{ cursor: 'pointer' }}
+                    >
                         <img 
                             src={slide.image} 
                             alt={`Slide ${slide.id}`}

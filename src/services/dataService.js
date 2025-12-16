@@ -1,5 +1,5 @@
-const API_URL = "http://18.223.126.175:8080/api";
-const SERVER_URL = "http://18.223.126.175:8080";
+const API_URL = "http://18.218.0.241:8080/api";
+const SERVER_URL = "http://18.218.0.241:8080";
 
 export const getImagenUrl = (imgPath) => {
     const rutaAProcesar = imgPath || "/assets/img/ps5-caja.png";
