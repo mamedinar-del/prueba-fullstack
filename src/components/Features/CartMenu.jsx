@@ -1,22 +1,10 @@
 import { useCart } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
+import { getImagenUrl } from '../../services/dataService';
 
 const CartMenu = () => {
     const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, cartTotal } = useCart();
 
-    const getImageUrl = (imgName) => {
-        const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`;
-        
-        if (!imgName) return fallback;
-        if (imgName.startsWith("http")) return imgName;
-        
-        if (imgName.startsWith("/assets")) {
-             return `${base.replace(/\/$/, '')}${imgName}`;
-        }
-        
-        return `http://localhost:8080/api/productos/images/${imgName}`;
-    };
 
     return (
         <>
@@ -45,9 +33,9 @@ const CartMenu = () => {
                             <div className="cart-item" key={item.id}>
                                 <div className="cart-item-img">
                                     <img 
-                                        src={getImageUrl(item.img)} 
+                                        src={getImagenUrl(item.img)} 
                                         alt={item.nombre} 
-                                        onError={(e) => e.target.src = getImageUrl(null)}
+                                        onError={(e) => e.target.src = getImagenUrl(null)}
                                     />
                                 </div>
                                 <div className="cart-item-info">

@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroCarousel from '../components/UI/HeroCarousel';
-import { getProductos } from '../services/dataService';
+import { getProductos, getImagenUrl } from '../services/dataService';
 import { useCart } from '../context/CartContext';
-
-import fallbackImage from '../assets/img/ps5-caja.png';
-import tecnicoImage from '../assets/img/tecnico.jpg';
 
 const Home = () => {
     const [productos, setProductos] = useState([]);
     const [subscribed, setSubscribed] = useState(false);
     const { addToCart } = useCart();
-
-    const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) ? import.meta.env.BASE_URL : '/';
 
     useEffect(() => {
         const load = async () => {
@@ -22,18 +17,6 @@ const Home = () => {
         load();
     }, []);
 
-    const getImageUrl = (imgName) => {
-        const fallback = fallbackImage; 
-        if (!imgName) return fallback;
-        if (typeof imgName !== 'string') return fallback;
-        const trimmed = imgName.trim();
-        if (/^https?:\/\//i.test(trimmed)) return trimmed; 
-        if (trimmed.startsWith('/assets') || trimmed.startsWith('assets')) {
-            return trimmed.startsWith('/') ? `${base.replace(/\/$/, '')}${trimmed}` : `${base}${trimmed}`;
-        }
-        if (trimmed.startsWith('/api')) return `http://localhost:8080${imgName}`;
-        return `http://localhost:8080/api/productos/images/${imgName}`;
-    };
 
     const handleSubscribe = (e) => {
         e.preventDefault();
@@ -79,9 +62,9 @@ const Home = () => {
                                 <div className="contenedor-img">
                                     <Link to={`/producto/${prod.id}`}>
                                         <img 
-                                            src={getImageUrl(prod.img || prod.imagen)} 
+                                            src={getImagenUrl(prod.img || prod.imagen)} 
                                             alt={prod.nombre} 
-                                            onError={(e) => e.target.src = fallbackImage} 
+                                            onError={(e) => e.target.src = getImagenUrl("/assets/img/ps5-caja.png")} 
                                         />
                                         
                                         {!sinStock && prod.badge && (
@@ -143,7 +126,11 @@ const Home = () => {
                         <Link to="/servicio-tecnico" className="btn-servicio">Agenda tu Revisión</Link>
                     </div>
                     <div className="columna-imagen">
-                        <img src={tecnicoImage} alt="Taller de reparación" onError={(e) => e.target.style.display = 'none'} />
+                        <img 
+                            src={getImagenUrl("/assets/img/tecnico.jpg")} 
+                            alt="Taller de reparación" 
+                            onError={(e) => e.target.style.display = 'none'} 
+                        />
                     </div>
                 </div>
             </section>

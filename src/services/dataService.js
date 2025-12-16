@@ -1,4 +1,30 @@
 const API_URL = "http://18.223.126.175:8080/api";
+const SERVER_URL = "http://18.223.126.175:8080";
+
+export const getImagenUrl = (imgPath) => {
+    const rutaAProcesar = imgPath || "/assets/img/ps5-caja.png";
+
+    let urlFinal;
+    
+    if (rutaAProcesar.startsWith("http")) {
+        urlFinal = rutaAProcesar;
+    } 
+    else if (rutaAProcesar.startsWith("/api")) {
+        urlFinal = `${SERVER_URL}${rutaAProcesar}`;
+    } 
+    else if (rutaAProcesar.startsWith("/")) {
+        const base = import.meta.env.BASE_URL;
+        const prefix = base.endsWith('/') ? base : `${base}/`;
+        urlFinal = `${prefix}${rutaAProcesar.substring(1)}`;
+    } 
+    else {
+        urlFinal = rutaAProcesar;
+    }
+
+    console.log(`Imagen Input: ${imgPath} | URL Generada: ${urlFinal}`);
+    
+    return urlFinal;
+};
 
 const getAuthHeader = () => {
     const user = JSON.parse(localStorage.getItem('levelup_user'));

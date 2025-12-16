@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
+
 import { 
     getProductos, 
     crearProductoAPI, 
@@ -29,6 +32,16 @@ const AdminPanel = () => {
         id: null, nombre: '', precio: '', categoria: '', stock: '', descripcion: '', imgFile: null
     });
     const [specsList, setSpecsList] = useState([{ key: '', value: '' }]);
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+            ['link', 'color'],
+            ['clean']
+        ],
+    };
 
     const getImgUrl = (path) => {
         const base = import.meta.env.BASE_URL; 
@@ -107,6 +120,10 @@ const AdminPanel = () => {
         setFormProducto({ id: null, nombre: '', precio: '', categoria: '', stock: '', descripcion: '', imgFile: null });
         setSpecsList([{ key: '', value: '' }]);
         setIsEditing(false);
+    };
+
+    const handleDescripcionChange = (value) => {
+        setFormProducto({ ...formProducto, descripcion: value });
     };
 
     const handleSubmitProducto = async (e) => {
@@ -249,8 +266,19 @@ const AdminPanel = () => {
                                     </select>
                                     <input type="number" placeholder="Stock" value={formProducto.stock} onChange={e => setFormProducto({...formProducto, stock: e.target.value})} required />
                                 </div>
-                                <div className="form-row">
-                                    <textarea placeholder="Descripción" rows="2" value={formProducto.descripcion} onChange={e => setFormProducto({...formProducto, descripcion: e.target.value})} style={{width:'100%', padding:'10px', border:'1px solid #ddd', borderRadius:'5px'}}></textarea>
+
+                                <div className="form-row" style={{display:'block', marginBottom:'20px'}}>
+                                    <label style={{fontWeight:'bold', marginBottom:'5px', display:'block'}}>Descripción Detallada</label>
+                                    <div style={{background:'white', color:'black'}}>
+                                        <ReactQuill 
+                                            theme="snow"
+                                            value={formProducto.descripcion}
+                                            onChange={handleDescripcionChange}
+                                            modules={modules}
+                                            placeholder="Escribe la descripción del producto..."
+                                            style={{ height: '200px', marginBottom: '50px' }}
+                                        />
+                                    </div>
                                 </div>
 
                                 <div style={{background:'#f9f9f9', padding:'10px', marginBottom:'10px', borderRadius:'5px'}}>

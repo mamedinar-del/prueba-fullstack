@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-import banner1 from '../../assets/img/banner-slide1.jpg'; 
+import { getImagenUrl } from '../../services/dataService';
 
 const HeroCarousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -8,15 +7,15 @@ const HeroCarousel = () => {
     const slides = [
         {
             id: 1,
-            image: banner1, 
+            image: getImagenUrl("/assets/img/banner-slide1.jpg"), 
         },
         {
             id: 2,
-            image: banner1,
+            image: getImagenUrl("/assets/img/banner-slide2.jpg"),
         },
         {
             id: 3,
-            image: banner1,
+            image: getImagenUrl("/assets/img/banner-slide3.jpg"),
         }
     ];
     

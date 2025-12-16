@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-
-import logoImage from '../../assets/img/LogoTienda-SinFondo.png'; 
+import { getImagenUrl } from '../../services/dataService';
 
 const Header = () => {
     const { user, logout } = useAuth();
@@ -30,7 +29,11 @@ const Header = () => {
         <header className="header-principal">
             <div className="logo-container">
                 <Link to="/">
-                    <img src={logoImage} alt="Logo Level-Up" className="mi-logo" /> 
+                    <img 
+                        src={getImagenUrl("/assets/img/LogoTienda-SinFondo.png")} 
+                        alt="Logo Level-Up" 
+                        className="mi-logo" 
+                    /> 
                 </Link>
             </div>
 

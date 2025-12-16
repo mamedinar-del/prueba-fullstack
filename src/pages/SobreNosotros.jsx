@@ -1,6 +1,5 @@
 import React from 'react';
-
-import aboutUsImage from '../assets/img/about-us.png';
+import { getImagenUrl } from '../services/dataService';
 
 const SobreNosotros = () => {
     return (
@@ -18,7 +17,7 @@ const SobreNosotros = () => {
                         <p>Lo que comenzó como un pequeño taller, hoy es líder del sector. Creemos que la tecnología es una herramienta para crear, jugar y conectar.</p>
                     </div>
                     <div className="about-image">
-                        <img src={aboutUsImage} alt="Equipo" />
+                        <img src={getImagenUrl("/assets/img/about-us.png")} alt="Equipo" />
                     </div>
                 </div>
             </section>

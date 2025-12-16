@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom';
-import picMain from '../assets/img/pic-main.jpg'; 
-import pic1 from '../assets/img/pic1.jpg';
-import pic2 from '../assets/img/pic2.jpg';
-import pic3 from '../assets/img/pic3.jpg';
-import pic4 from '../assets/img/pic4.jpg';
-import pic5 from '../assets/img/pic5.jpg';
-import pic6 from '../assets/img/pic6.jpg';
+import { getImagenUrl } from '../services/dataService';
 
 const Blog = () => {
 
     const recentPosts = [
         {
             id: 1,
-            img: pic1, 
+            img: "/assets/img/pic1.jpg", 
             category: "PC Gaming",
             catClass: "pc",
             date: "Hace 2 horas",
@@ -21,7 +15,7 @@ const Blog = () => {
         },
         {
             id: 2,
-            img: pic2, 
+            img: "/assets/img/pic2.jpg", 
             category: "Review",
             catClass: "review",
             date: "Ayer",
@@ -30,7 +24,7 @@ const Blog = () => {
         },
         {
             id: 3,
-            img: pic3, 
+            img: "/assets/img/pic3.jpg", 
             category: "Mobile",
             catClass: "mobile",
             date: "24 Nov 2025",
@@ -39,7 +33,7 @@ const Blog = () => {
         },
         {
             id: 4,
-            img: pic4, 
+            img: "/assets/img/pic4.jpg", 
             category: "Streaming",
             catClass: "streaming",
             date: "20 Nov 2025",
@@ -48,7 +42,7 @@ const Blog = () => {
         },
         {
             id: 5,
-            img: pic5, 
+            img: "/assets/img/pic5.jpg", 
             category: "Retro",
             catClass: "retro",
             date: "18 Nov 2025",
@@ -57,7 +51,7 @@ const Blog = () => {
         },
         {
             id: 6,
-            img: pic6, 
+            img: "/assets/img/pic6.jpg", 
             category: "E-Sports",
             catClass: "esports",
             date: "15 Nov 2025",
@@ -77,7 +71,10 @@ const Blog = () => {
                 
                 <article className="blog-featured">
                     <div className="featured-img">
-                        <img src={picMain} alt="Consola Nueva Generación" /> 
+                        <img 
+                            src={getImagenUrl("/assets/img/pic-main.jpg")} 
+                            alt="Consola Nueva Generación" 
+                        /> 
                         <span className="badge-cat">Consolas</span>
                     </div>
                     <div className="featured-content">
@@ -99,7 +96,7 @@ const Blog = () => {
                     {recentPosts.map((post) => (
                         <article className="blog-card" key={post.id}>
                             <div className="card-img">
-                                <img src={post.img} alt={post.title} />
+                                <img src={getImagenUrl(post.img)} alt={post.title} />
                                 <span className={`badge-cat ${post.catClass}`}>{post.category}</span>
                             </div>
                             <div className="card-content">

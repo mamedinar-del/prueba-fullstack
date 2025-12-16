@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getProductos } from '../services/dataService';
+import { getProductos, getImagenUrl } from '../services/dataService';
 import { useCart } from '../context/CartContext';
 
 const DetalleProducto = () => {
@@ -11,20 +11,6 @@ const DetalleProducto = () => {
     const [cantidad, setCantidad] = useState(1);
     
     const { addToCart } = useCart();
-
-    const getImageUrl = (imgName) => {
-        const base = import.meta.env.BASE_URL; 
-        const fallback = `${base}assets/img/ps5-caja.png`;
-        
-        if (!imgName) return fallback;
-        if (imgName.startsWith("http")) return imgName;
-        
-        if (imgName.startsWith("/assets")) {
-             return `${base.replace(/\/$/, '')}${imgName}`;
-        }
-
-        return `http://localhost:8080/api/productos/images/${imgName}`;
-    };
 
 
     useEffect(() => {
@@ -72,15 +58,15 @@ const DetalleProducto = () => {
                 <div className="galeria-container">
                     <div className="imagen-principal">
                         <img 
-                            src={getImageUrl(imagenActiva)} 
+                            src={getImagenUrl(imagenActiva)} 
                             alt={producto.nombre} 
-                            onError={(e) => e.target.src = getImageUrl(null)}
+                            onError={(e) => e.target.src = getImagenUrl(null)}
                         />
                     </div>
                     {producto.galeria && (
                         <div className="miniaturas-strip">
                              <img 
-                                src={getImageUrl(producto.img)} 
+                                src={getImagenUrl(producto.img)} 
                                 className="active" 
                                 alt="Miniatura" 
                                 onClick={() => setImagenActiva(producto.img)}
@@ -124,7 +110,10 @@ const DetalleProducto = () => {
                         )}
                     </div>
 
-                    <p className="descripcion-corta" style={{marginTop: '20px'}}>{producto.descripcion}</p>
+                    <div 
+                        className="descripcion-html"
+                        dangerouslySetInnerHTML={{ __html: producto.descripcion }} 
+                    />
 
                     {producto.stock > 0 && (
                         <div className="acciones-compra">
@@ -171,7 +160,14 @@ const DetalleProducto = () => {
                     <button className={activeTab==='specs'?'active':''} onClick={()=>setActiveTab('specs')}>Especificaciones</button>
                 </div>
                 <div className="tabs-content">
-                    {activeTab === 'descripcion' && <p style={{lineHeight: '1.6', color: '#555'}}>{producto.descripcion}</p>}
+                    {activeTab === 'descripcion' && (
+                        <div 
+                            className="descripcion-html" 
+                            style={{lineHeight: '1.6', color: '#555'}}
+                            dangerouslySetInnerHTML={{ __html: producto.descripcion }}
+                        />
+                    )}
+                    
                     {activeTab === 'specs' && (
                         <div className="tab-pane">
                             <h3>Ficha Técnica</h3>

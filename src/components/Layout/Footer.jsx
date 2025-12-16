@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-
-import logoImg from '../../assets/img/LogoTienda-SinFondo.png';
+import { getImagenUrl } from '../../services/dataService';
 
 const Footer = () => {
 
@@ -12,7 +11,7 @@ const Footer = () => {
                     
                     <div className="brand-footer">
                         <img 
-                            src={logoImg} 
+                            src={getImagenUrl("/assets/img/LogoTienda-SinFondo.png")} 
                             alt="Logo" 
                             className="logo-medio" 
                         />
@@ -43,8 +42,8 @@ const Footer = () => {
                 <div className="footer-col">
                     <h3>Soporte</h3>
                     <ul>
-                        <li><a href="/sobre-nosotros">Centro de Ayuda</a></li>
-                        <li><a href="/envios">Rastrea tu pedido</a></li>
+                        <li><Link to="/sobre-nosotros">Centro de Ayuda</Link></li>
+                        <li><Link to="/envios">Rastrea tu pedido</Link></li>
                         <li><Link to="/servicio-tecnico">Servicio Técnico</Link></li>
                     </ul>
                 </div>

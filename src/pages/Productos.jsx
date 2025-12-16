@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getProductos } from '../services/dataService';
+import { getProductos, getImagenUrl } from '../services/dataService';
 import { useCart } from '../context/CartContext';
 
 const Productos = () => {
@@ -29,19 +29,6 @@ const Productos = () => {
         if(e.target.value === "") setSearchParams({});
     };
 
-    const getImageUrl = (imgName) => {
-        const base = import.meta.env.BASE_URL;
-        const fallback = `${base}assets/img/ps5-caja.png`;
-        
-        if (!imgName) return fallback;
-        if (imgName.startsWith("http")) return imgName;
-        
-        if (imgName.startsWith("/assets")) {
-            return `${base.replace(/\/$/, '')}${imgName}`;
-        }
-        
-        return `http://localhost:8080/api/productos/images/${imgName}`;
-    };
 
     const productosProcesados = productos
         .filter((prod) => {
@@ -126,9 +113,9 @@ const Productos = () => {
                                         <div className="card-img-box">
                                             <Link to={`/producto/${prod.id}`}>
                                                 <img 
-                                                    src={getImageUrl(prod.img)} 
+                                                    src={getImagenUrl(prod.img)} 
                                                     alt={prod.nombre} 
-                                                    onError={(e) => e.target.src = getImageUrl(null)} 
+                                                    onError={(e) => e.target.src = getImagenUrl(null)} 
                                                 />
                                             </Link>
                                             
