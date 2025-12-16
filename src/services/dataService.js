@@ -1,4 +1,4 @@
-const API_URL = "http://18.220.230.244:8080/api:";
+const API_URL = "http://18.223.126.175:8080/api";
 
 const getAuthHeader = () => {
     const user = JSON.parse(localStorage.getItem('levelup_user'));
